@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jam DIgital</title>
+</head>
+<body onload="generalJamDigital();">
+    <h1>Jam Digital</h1>
+     <h2 id="jam-digital"></h2>
+     <script>
+         const generalJamDigital = () => {
+             let counter = 1;
+             setInterval(() => {
+                 let date = new Date();
+                 let jam = ('0' + date.getHours()).substr(-2);
+                 let menit = ('0' + date.getMinutes()).substr(-2);
+                 let detik = ('0' + date.getSeconds()).substr(-2);
+                 // document.write('${jam}:${menit}:${detik}')
+                 document.getElementById('jam-digital').textContent = `${jam}:${menit}:${detik}`;
+                 console.log(counter);
+                 if (counter % 2 === 0) {
+                     document.body.style.color = "red";
+                 } else {
+                     document.body.style.color = "blue";
+                 } 
+                 
+                 counter++;
+             }, 1000);
+         }
+     </script>
+
+     
+     
+</body>
+</html> 
