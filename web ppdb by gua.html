@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html><html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PPDB Online | Sekolah Hebat</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }body {
+  background: linear-gradient(135deg, #2563eb, #22c55e);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  background: #ffffff;
+  width: 100%;
+  max-width: 900px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+header {
+  background: #1e40af;
+  color: white;
+  padding: 30px;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+header p {
+  opacity: 0.9;
+}
+
+.content {
+  padding: 30px;
+}
+
+.info {
+  margin-bottom: 30px;
+  background: #f1f5f9;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.info h2 {
+  margin-bottom: 10px;
+  color: #1e40af;
+}
+
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+form .full {
+  grid-column: 1 / 3;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5f5;
+  font-size: 14px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #1e40af;
+}
+
+footer {
+  text-align: center;
+  padding: 15px;
+  background: #f8fafc;
+  font-size: 14px;
+  color: #64748b;
+}
+
+@media (max-width: 768px) {
+  form {
+    grid-template-columns: 1fr;
+  }
+
+  form .full {
+    grid-column: 1 / 2;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>PPDB Online</h1>
+      <p>Sistem Penerimaan Peserta Didik Baru</p>
+    </header><div class="content">
+  <div class="info">
+    <h2>Informasi PPDB</h2>
+    <p>Silakan isi formulir pendaftaran dengan data yang benar dan lengkap. Pastikan semua kolom wajib diisi.</p>
+  </div>
+
+  <form>
+    <div>
+      <label>Nama Lengkap</label>
+      <input type="text" placeholder="Masukkan nama lengkap" required />
+    </div>
+
+    <div>
+      <label>NISN</label>
+      <input type="number" placeholder="Masukkan NISN" required />
+    </div>
+
+    <div>
+      <label>Tempat Lahir</label>
+      <input type="text" placeholder="Tempat lahir" />
+    </div>
+
+    <div>
+      <label>Tanggal Lahir</label>
+      <input type="date" />
+    </div>
+
+    <div>
+      <label>Jenis Kelamin</label>
+      <select>
+        <option>Laki-laki</option>
+        <option>Perempuan</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Pilihan Jurusan</label>
+      <select>
+        <option>IPA</option>
+        <option>IPS</option>
+</body>
+</html>
