@@ -90,7 +90,7 @@ button:hover{background:#141e30}
     margin:0 auto;
     padding:20px;
 }
-@media(max-width:600px){
+@media(max-width:768px){
     .materi-wrap{flex-direction:column;align-items:center;}
 }
 </style>
@@ -109,7 +109,7 @@ button:hover{background:#141e30}
         <option value="">Pilih Sekolah</option>
         <option>SMP 2 BATANG</option>
         <option>SMP 3 BATANG</option>
-        <option>MTS NU BATANV</option>
+        <option>MTS NU BATANG</option>
         <option>MTS MUHAMMADIYAH BATANG</option>
     </select>
     <br>
@@ -143,7 +143,7 @@ button:hover{background:#141e30}
         <p><b id="hSekolah"></b></p>
         <p>Skor Akhir: <b id="hSkor"></b></p>
         <p>Benar: <b id="hBenar"></b> | Salah: <b id="hSalah"></b></p>
-        <button onclick="reset()">🔁 Kembali ke Awal</button>
+        <button onclick="reset()">🔁 KEMBALI KE HALAMAN LOGIN</button>
     </div>
 </div>
 
@@ -155,26 +155,57 @@ const materiWrap=document.getElementById("materiWrap");
 
 /* ===== MATERI DETAIL 20 TOPIK ===== */
 const materi=[
-{judul:"Apa itu Pemrograman?", isi:"Pemrograman adalah proses memberi instruksi ke komputer agar melakukan tugas tertentu. Contoh: membuat aplikasi, website, game, atau AI.", gambar:"https://cdn-icons-png.flaticon.com/512/2721/2721296.png"},
-{judul:"Sejarah Pemrograman", isi:"Dimulai sejak komputer pertama, Ada Lovelace dikenal sebagai programmer pertama dengan algoritmanya.", gambar:"https://cdn-icons-png.flaticon.com/512/1995/1995574.png"},
-{judul:"Bahasa Pemrograman", isi:"Bahasa yang digunakan untuk menulis instruksi komputer. Contoh: Python, Java, C++, JavaScript, HTML/CSS.", gambar:"https://cdn-icons-png.flaticon.com/512/1040/1040239.png"},
-{judul:"HTML Dasar", isi:"HTML (HyperText Markup Language) membuat struktur halaman web. Contoh: <h1>, <p>, <img>, <a>", gambar:"https://cdn-icons-png.flaticon.com/512/732/732212.png"},
-{judul:"Struktur HTML", isi:"Struktur dasar HTML: <html>, <head>, <body>. Head untuk metadata, body untuk konten.", gambar:"https://cdn-icons-png.flaticon.com/512/1041/1041830.png"},
-{judul:"Heading & Paragraf", isi:"<h1>-<h6> untuk judul, <p> untuk paragraf.", gambar:"https://cdn-icons-png.flaticon.com/512/1828/1828919.png"},
-{judul:"Link & Gambar", isi:"<a> untuk tautan, <img> untuk menampilkan gambar.", gambar:"https://cdn-icons-png.flaticon.com/512/271/271210.png"},
-{judul:"List & Table", isi:"<ul>/<ol> untuk daftar, <table> untuk tabel.", gambar:"https://cdn-icons-png.flaticon.com/512/1055/1055687.png"},
-{judul:"Form HTML", isi:"Form digunakan untuk input data pengguna. Contoh: <input>, <button>, <select>", gambar:"https://cdn-icons-png.flaticon.com/512/2919/2919602.png"},
-{judul:"CSS Dasar", isi:"CSS (Cascading Style Sheets) untuk mempercantik tampilan web. Contoh: color, background-color, font-size.", gambar:"https://cdn-icons-png.flaticon.com/512/732/732190.png"},
-{judul:"Selektor CSS", isi:"Tag, Class, ID untuk memilih elemen HTML dan menambahkan style.", gambar:"https://cdn-icons-png.flaticon.com/512/1055/1055645.png"},
-{judul:"Box Model", isi:"Elemen HTML memiliki margin, border, padding, content.", gambar:"https://cdn-icons-png.flaticon.com/512/1055/1055651.png"},
-{judul:"Flexbox & Grid", isi:"Flexbox & Grid digunakan untuk layout responsif dan rapi.", gambar:"https://cdn-icons-png.flaticon.com/512/1055/1055652.png"},
-{judul:"Animasi CSS", isi:"Transisi, transform, hover effects untuk interaktifitas.", gambar:"https://cdn-icons-png.flaticon.com/512/1055/1055650.png"},
-{judul:"JavaScript Dasar", isi:"JavaScript membuat website interaktif. Contoh: alert(), onclick.", gambar:"https://cdn-icons-png.flaticon.com/512/5968/5968292.png"},
-{judul:"Variabel & Function JS", isi:"Menyimpan data & membuat fungsi agar bisa dipanggil berkali-kali.", gambar:"https://cdn-icons-png.flaticon.com/512/5968/5968315.png"},
-{judul:"DOM & Event Handling", isi:"Mengubah HTML lewat JS & menangkap aksi pengguna (klik, hover).", gambar:"https://cdn-icons-png.flaticon.com/512/5968/5968319.png"},
-{judul:"Python Dasar", isi:"Bahasa pemrograman sederhana dan fleksibel. Contoh: print(), for loop.", gambar:"https://cdn-icons-png.flaticon.com/512/5968/5968350.png"},
-{judul:"Python Mini Project", isi:"Contoh project sederhana: kalkulator, konversi suhu.", gambar:"https://cdn-icons-png.flaticon.com/512/5968/5968350.png"},
-{judul:"Aplikasi Programmer", isi:"VS Code, PyCharm, Sublime Text, Notepad++, Android Studio.", gambar:"https://cdn-icons-png.flaticon.com/512/906/906324.png"}
+{j:"Apa itu Pemrograman", i:`Pemrograman adalah proses memberi instruksi kepada komputer
+agar dapat melakukan tugas tertentu seperti membuat website,
+aplikasi, game, dan sistem digital lainnya.
+
+Dengan pemrograman, komputer bisa bekerja otomatis sesuai perintah.`},
+{j:"Manfaat Pemrograman", i:`Belajar pemrograman memiliki banyak manfaat:
+• Melatih logika berpikir
+• Meningkatkan kreativitas
+• Membantu memecahkan masalah
+• Membuka peluang kerja
+• Bisa membuat aplikasi sendiri`},
+{j:"HTML", i:`HTML (HyperText Markup Language) digunakan untuk membuat
+struktur dasar website seperti judul, paragraf, gambar,
+tabel, dan form.
+
+HTML ibarat kerangka tubuh website.`},
+{j:"CSS", i:`CSS (Cascading Style Sheets) digunakan untuk mengatur tampilan website.
+
+CSS mengatur:
+• Warna
+• Ukuran teks
+• Layout
+• Animasi
+Tanpa CSS, website terlihat polos.`},
+{j:"JavaScript", i:`JavaScript membuat website menjadi interaktif.
+
+Digunakan untuk:
+• Tombol
+• Validasi form
+• Game
+• Kuis
+• Animasi`},
+{j:"Python", i:`Python adalah bahasa pemrograman populer karena
+mudah dipelajari dan kuat.
+
+Digunakan untuk AI, data science,
+aplikasi, dan backend website.`},
+{j:"Struktur HTML", i:"<html> untuk root, <head> untuk metadata, <body> untuk konten utama."},
+{j:"Heading & Paragraf", i:"<h1>-<h6> untuk judul, <p> untuk paragraf."},
+{j:"Link & Gambar", i:"<a> untuk tautan, <img> untuk menampilkan gambar."},
+{j:"List & Table", i:"<ul>/<ol> untuk daftar, <table> untuk tabel."},
+{j:"Form HTML", i:"<form> untuk input data, <input>, <select>, <button> untuk interaksi."},
+{j:"Selektor CSS", i:".class, #id, tag selector untuk menambahkan style."},
+{j:"Box Model", i:"Margin, border, padding, content untuk tiap elemen HTML."},
+{j:"Flexbox & Grid", i:"Flexbox & Grid digunakan untuk layout responsif dan rapi."},
+{j:"Animasi CSS", i:"Transisi, transform, hover effects untuk interaktivitas."},
+{j:"JavaScript Dasar", i:"Membuat website interaktif, contoh alert(), onclick events."},
+{j:"Variabel & Function JS", i:"Menyimpan data & membuat fungsi yang bisa dipanggil berkali-kali."},
+{j:"DOM & Event Handling", i:"Mengubah HTML lewat JS & menangkap aksi pengguna seperti klik, hover."},
+{j:"Python Dasar", i:"Bahasa sederhana dan fleksibel, contoh print(), for loop."},
+{j:"Python Mini Project", i:"Contoh project sederhana: kalkulator, konversi suhu, dll."}
 ];
 
 /* ===== KUIS ===== */
@@ -210,15 +241,15 @@ function mulai(){
 function tampilMateri(){
     materiWrap.style.opacity=0;
     setTimeout(()=>{
-        judul.innerText=materi[i].judul;
-        isi.innerText=materi[i].isi;
-        gambar.src=materi[i].gambar;
+        judul.innerText=materi[i].j;
+        isi.innerText=materi[i].i;
+        gambar.src="https://cdn-icons-png.flaticon.com/512/2721/2721296.png";
         materiWrap.style.opacity=1;
     },300);
 }
 
 function next(){
-    if(i<materi.length-1){i++;tampilMateri();}
+    if(i<materi.length-1){i++; tampilMateri();}
     else{
         materiDiv.classList.add("hidden");
         kuisDiv.classList.remove("hidden");
@@ -226,7 +257,7 @@ function next(){
         tampilKuis();
     }
 }
-function prev(){if(i>0){i--;tampilMateri();}}
+function prev(){if(i>0){i--; tampilMateri();}}
 
 function tampilKuis(){
     soal.innerText=kuis[i].soal;
@@ -251,7 +282,7 @@ function jawab(el,p){
 
     setTimeout(()=>{
         i++;
-        if(i<kuis.length)tampilKuis();
+        if(i<kuis.length) tampilKuis();
         else{
             kuisDiv.classList.add("hidden");
             hasil.classList.remove("hidden");
