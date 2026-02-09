@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>E-Learning Pemrograman</title>
+<style>
+body{
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#141e30,#243b55);
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.box{
+    background:#fff;
+    width:95%;
+    max-width:1000px;
+    padding:30px;
+    border-radius:22px;
+    box-shadow:0 18px 40px rgba(0,0,0,.35);
+    position:relative;
+}
+.center{text-align:center}
+.hidden{display:none}
+
+input, select{
+    width:80%;
+    padding:12px;
+    margin:8px;
+    border-radius:10px;
+    border:1px solid #ccc;
+}
+
+button{
+    padding:12px 22px;
+    border:none;
+    border-radius:14px;
+    background:#243b55;
+    color:white;
+    cursor:pointer;
+    margin:6px;
+    transition:.25s;
+}
+button:hover{background:#141e30}
+
+/* ===== MATERI LAYOUT ===== */
+.materi-wrap{
+    display:flex;
+    gap:20px;
+    align-items:flex-start;
+    opacity:1;
+    transition:opacity .5s;
+    flex-wrap:wrap;
+}
+.materi-wrap img{
+    width:180px;
+    border-radius:10px;
+}
+.materi-text{
+    text-align:justify;
+    line-height:1.7;
+    flex:1;
+    min-width:250px;
+}
+
+/* ===== KUIS ===== */
+.option{
+    width:90%;
+    display:block;
+    margin:10px auto;
+    padding:14px;
+    border-radius:14px;
+    background:#f1f1f1;
+    font-size:15px;
+    cursor:pointer;
+    transition:.2s;
+}
+.option:hover{
+    transform:translateY(-4px);
+    box-shadow:0 8px 18px rgba(0,0,0,.25);
+}
+.benar{background:#2ecc71;color:white}
+.salah{background:#e74c3c;color:white}
+
+/* ===== HASIL ===== */
+.hasil-box{
+    max-width:500px;
+    margin:0 auto;
+    padding:20px;
+}
+@media(max-width:600px){
+    .materi-wrap{flex-direction:column;align-items:center;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<!-- LOGIN -->
+<div id="login" class="center">
+    <h2>📘 E-Learning Pemrograman</h2>
+    <p>Masukkan data untuk memulai</p>
+    <input id="nama" placeholder="Nama Siswa">
+    <select id="sekolah">
+        <option value="">Pilih Sekolah</option>
+        <option>SMP 2 BATANG</option>
+        <option>SMP 3 BATANG</option>
+        <option>MTS NU BATANV</option>
+        <option>MTS MUHAMMADIYAH BATANG</option>
+    </select>
+    <br>
+    <button onclick="mulai()">Masuk</button>
+</div>
+
+<!-- MATERI -->
+<div id="materi" class="hidden">
+    <h2 id="judul"></h2>
+    <div class="materi-wrap" id="materiWrap">
+        <img id="gambar">
+        <div class="materi-text" id="isi"></div>
+    </div>
+    <div class="center">
+        <button onclick="prev()">⬅ Sebelumnya</button>
+        <button onclick="next()">Materi Selanjutnya ➡</button>
+    </div>
+</div>
+
+<!-- KUIS -->
+<div id="kuis" class="hidden center">
+    <h2 id="soal"></h2>
+    <div id="opsi"></div>
+</div>
+
+<!-- HASIL -->
+<div id="hasil" class="hidden center">
+    <div class="hasil-box">
+        <h2>🎉 CONGRATULATIONS!</h2>
+        <p><b id="hNama"></b></p>
+        <p><b id="hSekolah"></b></p>
+        <p>Skor Akhir: <b id="hSkor"></b></p>
+        <p>Benar: <b id="hBenar"></b> | Salah: <b id="hSalah"></b></p>
+        <button onclick="reset()">🔁 Kembali ke Awal</button>
+    </div>
+</div>
+
+</div>
+
+<script>
+let i=0, skor=0, benar=0, salah=0, nama="", sekolah="";
+const materiWrap=document.getElementById("materiWrap");
+
+/* ===== MATERI DETAIL 20 TOPIK ===== */
+const materi=[
+{judul:"Apa itu Pemrograman?", isi:"Pemrograman adalah proses memberi instruksi ke komputer agar melakukan tugas tertentu. Contoh: membuat aplikasi, website, game, atau AI.", gambar:"https://cdn-icons-png.flaticon.com/512/2721/2721296.png"},
+{judul:"Sejarah Pemrograman", isi:"Dimulai sejak komputer pertama, Ada Lovelace dikenal sebagai programmer pertama dengan algoritmanya.", gambar:"https://cdn-icons-png.flaticon.com/512/1995/1995574.png"},
+{judul:"Bahasa Pemrograman", isi:"Bahasa yang digunakan untuk menulis instruksi komputer. Contoh: Python, Java, C++, JavaScript, HTML/CSS.", gambar:"https://cdn-icons-png.flaticon.com/512/1040/1040239.png"},
+{judul:"HTML Dasar", isi:"HTML (HyperText Markup Language) membuat struktur halaman web. Contoh: <h1>, <p>, <img>, <a>", gambar:"https://cdn-icons-png.flaticon.com/512/732/732212.png"},
+{judul:"Struktur HTML", isi:"Struktur dasar HTML: <html>, <head>, <body>. Head untuk metadata, body untuk konten.", gambar:"https://cdn-icons-png.flaticon.com/512/1041/1041830.png"},
+{judul:"Heading & Paragraf", isi:"<h1>-<h6> untuk judul, <p> untuk paragraf.", gambar:"https://cdn-icons-png.flaticon.com/512/1828/1828919.png"},
+{judul:"Link & Gambar", isi:"<a> untuk tautan, <img> untuk menampilkan gambar.", gambar:"https://cdn-icons-png.flaticon.com/512/271/271210.png"},
+{judul:"List & Table", isi:"<ul>/<ol> untuk daftar, <table> untuk tabel.", gambar:"https://cdn-icons-png.flaticon.com/512/1055/1055687.png"},
+{judul:"Form HTML", isi:"Form digunakan untuk input data pengguna. Contoh: <input>, <button>, <select>", gambar:"https://cdn-icons-png.flaticon.com/512/2919/2919602.png"},
+{judul:"CSS Dasar", isi:"CSS (Cascading Style Sheets) untuk mempercantik tampilan web. Contoh: color, background-color, font-size.", gambar:"https://cdn-icons-png.flaticon.com/512/732/732190.png"},
+{judul:"Selektor CSS", isi:"Tag, Class, ID untuk memilih elemen HTML dan menambahkan style.", gambar:"https://cdn-icons-png.flaticon.com/512/1055/1055645.png"},
+{judul:"Box Model", isi:"Elemen HTML memiliki margin, border, padding, content.", gambar:"https://cdn-icons-png.flaticon.com/512/1055/1055651.png"},
+{judul:"Flexbox & Grid", isi:"Flexbox & Grid digunakan untuk layout responsif dan rapi.", gambar:"https://cdn-icons-png.flaticon.com/512/1055/1055652.png"},
+{judul:"Animasi CSS", isi:"Transisi, transform, hover effects untuk interaktifitas.", gambar:"https://cdn-icons-png.flaticon.com/512/1055/1055650.png"},
+{judul:"JavaScript Dasar", isi:"JavaScript membuat website interaktif. Contoh: alert(), onclick.", gambar:"https://cdn-icons-png.flaticon.com/512/5968/5968292.png"},
+{judul:"Variabel & Function JS", isi:"Menyimpan data & membuat fungsi agar bisa dipanggil berkali-kali.", gambar:"https://cdn-icons-png.flaticon.com/512/5968/5968315.png"},
+{judul:"DOM & Event Handling", isi:"Mengubah HTML lewat JS & menangkap aksi pengguna (klik, hover).", gambar:"https://cdn-icons-png.flaticon.com/512/5968/5968319.png"},
+{judul:"Python Dasar", isi:"Bahasa pemrograman sederhana dan fleksibel. Contoh: print(), for loop.", gambar:"https://cdn-icons-png.flaticon.com/512/5968/5968350.png"},
+{judul:"Python Mini Project", isi:"Contoh project sederhana: kalkulator, konversi suhu.", gambar:"https://cdn-icons-png.flaticon.com/512/5968/5968350.png"},
+{judul:"Aplikasi Programmer", isi:"VS Code, PyCharm, Sublime Text, Notepad++, Android Studio.", gambar:"https://cdn-icons-png.flaticon.com/512/906/906324.png"}
+];
+
+/* ===== KUIS ===== */
+let kuis=[
+{soal:"HTML digunakan untuk?",opsi:["Struktur","Desain","Server","Database"],jawab:0},
+{soal:"CSS berfungsi untuk?",opsi:["Logika","Tampilan","Server","CPU"],jawab:1},
+{soal:"Website interaktif memakai?",opsi:["HTML","CSS","JavaScript","Python"],jawab:2},
+{soal:"Python terkenal karena?",opsi:["Sulit","Sederhana","Jarang","Lama"],jawab:1},
+{soal:"Programmer pertama?",opsi:["Bill Gates","Ada Lovelace","Jobs","Elon Musk"],jawab:1},
+{soal:"HTML termasuk?",opsi:["Bahasa","Markup","OS","DB"],jawab:1},
+{soal:"CSS bisa membuat?",opsi:["Animasi","Database","Server","CPU"],jawab:0},
+{soal:"JavaScript berjalan di?",opsi:["Browser","RAM","CPU","Harddisk"],jawab:0},
+{soal:"Python dipakai untuk?",opsi:["AI","Web","Game","Semua"],jawab:3},
+{soal:"Website modern butuh?",opsi:["HTML","CSS","JS","Semua"],jawab:3}
+];
+kuis=kuis.sort(()=>Math.random()-0.5);
+
+/* ===== LOGIC ===== */
+const namaInput=document.getElementById("nama");
+const sekolahInput=document.getElementById("sekolah");
+const materiDiv=document.getElementById("materi");
+const kuisDiv=document.getElementById("kuis");
+
+function mulai(){
+    nama=namaInput.value;
+    sekolah=sekolahInput.value;
+    if(!nama||!sekolah){alert("Harus mengisi Nama dan Sekolah!");return;}
+    login.classList.add("hidden");
+    materiDiv.classList.remove("hidden");
+    tampilMateri();
+}
+
+function tampilMateri(){
+    materiWrap.style.opacity=0;
+    setTimeout(()=>{
+        judul.innerText=materi[i].judul;
+        isi.innerText=materi[i].isi;
+        gambar.src=materi[i].gambar;
+        materiWrap.style.opacity=1;
+    },300);
+}
+
+function next(){
+    if(i<materi.length-1){i++;tampilMateri();}
+    else{
+        materiDiv.classList.add("hidden");
+        kuisDiv.classList.remove("hidden");
+        i=0;
+        tampilKuis();
+    }
+}
+function prev(){if(i>0){i--;tampilMateri();}}
+
+function tampilKuis(){
+    soal.innerText=kuis[i].soal;
+    opsi.innerHTML="";
+    kuis[i].opsi.forEach((o,n)=>{
+        opsi.innerHTML+=`<div class="option" onclick="jawab(this,${n})">${o}</div>`;
+    });
+}
+
+function jawab(el,p){
+    const benarIndex=kuis[i].jawab;
+    document.querySelectorAll(".option").forEach(o=>o.onclick=null);
+
+    if(p===benarIndex){
+        el.classList.add("benar");
+        skor+=10; benar++;
+    }else{
+        el.classList.add("salah");
+        document.querySelectorAll(".option")[benarIndex].classList.add("benar");
+        skor+=5; salah++;
+    }
+
+    setTimeout(()=>{
+        i++;
+        if(i<kuis.length)tampilKuis();
+        else{
+            kuisDiv.classList.add("hidden");
+            hasil.classList.remove("hidden");
+            hNama.innerText=nama;
+            hSekolah.innerText=sekolah;
+            hSkor.innerText=skor;
+            hBenar.innerText=benar;
+            hSalah.innerText=salah;
+        }
+    },900);
+}
+
+function reset(){location.reload();}
+</script>
+</body>
+</html>
