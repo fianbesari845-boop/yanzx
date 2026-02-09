@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>FIAN AND WHO ?</title>
+<style>
+body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#141e30,#243b55);margin:0;min-height:100vh;display:flex;justify-content:center;align-items:center;}
+.box{background:#fff;width:95%;max-width:1000px;padding:30px;border-radius:22px;box-shadow:0 18px 40px rgba(0,0,0,.35);position:relative;}
+.center{text-align:center}
+.hidden{display:none}
+input, select{width:80%;padding:12px;margin:8px;border-radius:10px;border:1px solid #ccc;}
+button{padding:12px 22px;border:none;border-radius:14px;background:#243b55;color:white;cursor:pointer;margin:6px;transition:.25s;}
+button:hover{background:#141e30}
+.materi-wrap{display:flex;gap:20px;align-items:flex-start;opacity:1;transition:opacity .5s;}
+.materi-wrap img{width:180px;}
+.materi-text{text-align:justify;line-height:1.7;}
+.option{width:90%;display:block;margin:10px auto;padding:14px;border-radius:14px;background:#f1f1f1;font-size:15px;cursor:pointer;transition:.2s;}
+.option:hover{transform:translateY(-4px);box-shadow:0 8px 18px rgba(0,0,0,.25);}
+.benar{background:#2ecc71;color:white}
+.salah{background:#e74c3c;color:white}
+.hasil-box{max-width:500px;margin:0 auto;padding:20px;}
+code{background:#f4f4f4;padding:2px 4px;border-radius:4px;}
+</style>
+</head>
+<body>
+<div class="box">
+
+<!-- LOGIN -->
+<div id="login" class="center">
+<h2>📘MINI WEB TENTANG PEMPROGAMAN</h2>
+<p>Masukkan data untuk memulai</p>
+<input id="nama" placeholder="Nama Siswa">
+<br>
+<select id="sekolah">
+<option value="">-- Pilih Sekolah --</option>
+<option value="SMP 2 BATANG">SMP 2 BATANG</option>
+<option value="SMP 3 BATANG">SMP 3 BATANG</option>
+<option value="MTS NU BATANV">MTS NU BATANG</option>
+<option value="MTS MUHAMMADIYAH BATANG">MTS MUHAMMADIYAH BATANG</option>
+</select>
+<br>
+<button onclick="mulai()">Masuk</button>
+</div>
+
+<!-- MATERI -->
+<div id="materi" class="hidden">
+<h2 id="judul"></h2>
+<div class="materi-wrap" id="materiWrap">
+<img id="gambar">
+<div class="materi-text" id="isi"></div>
+</div>
+<div class="center">
+<button onclick="prev()">⬅ Sebelumnya</button>
+<button onclick="next()">Materi Selanjutnya ➡</button>
+</div>
+</div>
+
+<!-- KUIS -->
+<div id="kuis" class="hidden center">
+<h2 id="soal"></h2>
+<div id="opsi"></div>
+</div>
+
+<!-- HASIL -->
+<div id="hasil" class="hidden center">
+<div class="hasil-box">
+<h2>🎉 CONGRATULATIONS!</h2>
+<p><b id="hNama"></b></p>
+<p><b id="hSekolah"></b></p>
+<p>Skor Akhir: <b id="hSkor"></b></p>
+<p>Benar: <b id="hBenar"></b> | Salah: <b id="hSalah"></b></p>
+<button onclick="reset()">🔁 KEMBALI KE HALAMAN LOGIN</button>
+</div>
+</div>
+
+</div>
+
+<script>
+window.onload=function(){
+let i=0, skor=0, benar=0, salah=0, nama="", sekolah="";
+const materiWrap=document.getElementById("materiWrap");
+
+/* ===== MATERI DETAIL 20 TOPIK SUPER LENGKAP ===== */
+const materi=[
+{judul:"HTML Dasar",isi:"HTML (HyperText Markup Language) adalah bahasa markup untuk membuat halaman web. Contohnya: <html>, <head>, <body>, <h1>-<h6>, <p>, <a>, <img>.",gambar:"https://cdn-icons-png.flaticon.com/512/2721/2721296.png"},
+{judul:"Heading",isi:"Gunakan <h1>-<h6> untuk membuat judul halaman, h1 terbesar, h6 terkecil. Contoh: <h1>Judul Besar</h1>",gambar:"https://cdn-icons-png.flaticon.com/512/732/732212.png"},
+{judul:"Paragraf & Link",isi:"<p> untuk paragraf. <a href='https://example.com'>Link</a> untuk tautan. Contoh: <p>Hello</p>",gambar:"https://cdn-icons-png.flaticon.com/512/732/732212.png"},
+{judul:"Gambar",isi:"<img src='gambar.jpg' alt='Contoh Gambar'> untuk menampilkan gambar. Bisa juga atur width dan height.",gambar:"https://cdn-icons-png.flaticon.com/512/732/732212.png"},
+{judul:"List",isi:"List: <ul> unordered, <ol> ordered, <li> item. Contoh: <ul><li>Item1</li></ul>",gambar:"https://cdn-icons-png.flaticon.com/512/732/732212.png"},
+{judul:"Form",isi:"<form> untuk form input, <input> untuk teks, <button> untuk tombol submit.",gambar:"https://cdn-icons-png.flaticon.com/512/732/732212.png"},
+{judul:"Table",isi:"<table> membuat tabel. <tr> baris, <td> sel. Contoh: <table><tr><td>1</td></tr></table>",gambar:"https://cdn-icons-png.flaticon.com/512/732/732212.png"},
+{judul:"CSS Dasar",isi:"CSS (Cascading Style Sheets) untuk mengatur tampilan halaman web. Contoh: color, font-size, background-color, margin, padding.",gambar:"https://cdn-icons-png.flaticon.com/512/732/732190.png"},
+{judul:"Box Model",isi:"Setiap elemen web memiliki margin, border, padding, content. Contoh: div {margin:10px;padding:5px;border:1px solid #000;}",gambar:"https://cdn-icons-png.flaticon.com/512/732/732190.png"},
+{judul:"Flexbox",isi:"Flexbox mengatur layout fleksibel: display:flex; justify-content:center; align-items:center;",gambar:"https://cdn-icons-png.flaticon.com/512/732/732190.png"},
+{judul:"Grid",isi:"CSS Grid membuat layout kompleks. Contoh: display:grid; grid-template-columns:repeat(3,1fr);",gambar:"https://cdn-icons-png.flaticon.com/512/732/732190.png"},
+{judul:"Responsif",isi:"Media queries: @media (max-width:768px){...} untuk tampilan responsive di perangkat mobile.",gambar:"https://cdn-icons-png.flaticon.com/512/732/732190.png"},
+{judul:"Animasi CSS",isi:"Gunakan transition, transform, animation. Contoh: div:hover{transform:scale(1.1);transition:0.5s;}",gambar:"https://cdn-icons-png.flaticon.com/512/732/732190.png"},
+{judul:"JavaScript Dasar",isi:"JS membuat website interaktif. Contoh: alert('Hello World'); document.getElementById('id').innerText='Teks';",gambar:"https://cdn-icons-png.flaticon.com/512/5968/5968292.png"},
+{judul:"Variabel & Tipe",isi:"let, const, var untuk menyimpan data. Tipe: number, string, boolean, array, object.",gambar:"https://cdn-icons-png.flaticon.com/512/5968/5968292.png"},
+{judul:"Function & Event",isi:"function myFunc(){...} untuk fungsi. Event: onclick, onmouseover.",gambar:"https://cdn-icons-png.flaticon.com/512/5968/5968292.png"},
+{judul:"DOM JS",isi:"DOM: manipulasi elemen HTML. document.querySelector, innerText, innerHTML.",gambar:"https://cdn-icons-png.flaticon.com/512/5968/5968292.png"},
+{judul:"Python Dasar",isi:"Python bahasa sederhana, populer. print(), input(), for, while, if, else, list, dict, tuple, set.",gambar:"https://cdn-icons-png.flaticon.com/512/5968/5968350.png"},
+{judul:"Python Mini Project",isi:"Contoh project: konversi suhu, hitung angka, kalkulator sederhana.",gambar:"https://cdn-icons-png.flaticon.com/512/906/906324.png"},
+{judul:"Aplikasi Programmer",isi:"Editor: VS Code, PyCharm, Sublime Text, Notepad++, Android Studio.",gambar:"https://cdn-icons-png.flaticon.com/512/906/906324.png"}
+];
+
+/* ===== KUIS ===== */
+let kuis=[
+{soal:"HTML digunakan untuk?",opsi:["Struktur","Desain","Server","Database"],jawab:0},
+{soal:"CSS berfungsi untuk?",opsi:["Logika","Tampilan","Server","CPU"],jawab:1},
+{soal:"Website interaktif memakai?",opsi:["HTML","CSS","JavaScript","Python"],jawab:2},
+{soal:"Python terkenal karena?",opsi:["Sulit","Sederhana","Jarang","Lama"],jawab:1},
+{soal:"Programmer pertama?",opsi:["Bill Gates","Ada Lovelace","Jobs","Elon Musk"],jawab:1},
+{soal:"HTML termasuk?",opsi:["Bahasa","Markup","OS","DB"],jawab:1},
+{soal:"CSS bisa membuat?",opsi:["Animasi","Database","Server","CPU"],jawab:0},
+{soal:"JavaScript berjalan di?",opsi:["Browser","RAM","CPU","Harddisk"],jawab:0},
+{soal:"Python dipakai untuk?",opsi:["AI","Web","Game","Semua"],jawab:3},
+{soal:"Website modern butuh?",opsi:["HTML","CSS","JS","Semua"],jawab:3}
+];
+kuis=kuis.sort(()=>Math.random()-0.5);
+
+/* ===== DOM ELEMENTS ===== */
+const loginDiv=document.getElementById("login");
+const materiDiv=document.getElementById("materi");
+const kuisDiv=document.getElementById("kuis");
+const hasilDiv=document.getElementById("hasil");
+const judulEl=document.getElementById("judul");
+const isiEl=document.getElementById("isi");
+const gambarEl=document.getElementById("gambar");
+const soalEl=document.getElementById("soal");
+const opsiEl=document.getElementById("opsi");
+const hNamaEl=document.getElementById("hNama");
+const hSekolahEl=document.getElementById("hSekolah");
+const hSkorEl=document.getElementById("hSkor");
+const hBenarEl=document.getElementById("hBenar");
+const hSalahEl=document.getElementById("hSalah");
+
+/* ===== LOGIC ===== */
+window.mulai=function(){
+    nama=document.getElementById("nama").value;
+    sekolah=document.getElementById("sekolah").value;
+    if(nama.trim()=="" || sekolah.trim()==""){alert("⚠️ Harap isi Nama dan pilih Sekolah terlebih dahulu!"); return;}
+    loginDiv.classList.add("hidden");
+    materiDiv.classList.remove("hidden");
+    tampilMateri();
+}
+
+window.tampilMateri=function(){
+    materiWrap.style.opacity=0;
+    setTimeout(()=>{
+        judulEl.innerText=materi[i].judul;
+        isiEl.innerText=materi[i].isi;
+        gambarEl.src=materi[i].gambar;
+        materiWrap.style.opacity=1;
+    },300);
+}
+
+window.next=function(){
+    if(i<materi.length-1){i++;tampilMateri();}
+    else{
+        materiDiv.classList.add("hidden");
+        kuisDiv.classList.remove("hidden");
+        i=0;
+        tampilKuis();
+    }
+}
+window.prev=function(){if(i>0){i--;tampilMateri();}}
+
+window.tampilKuis=function(){
+    soalEl.innerText=kuis[i].soal;
+    opsiEl.innerHTML="";
+    kuis[i].opsi.forEach((o,n)=>{opsiEl.innerHTML+=`<div class="option" onclick="jawab(this,${n})">${o}</div>`;});
+}
+
+window.jawab=function(el,p){
+    const benarIndex=kuis[i].jawab;
+    document.querySelectorAll(".option").forEach(o=>o.onclick=null);
+    if(p===benarIndex){el.classList.add("benar");skor+=10;benar++;}
+    else{el.classList.add("salah");document.querySelectorAll(".option")[benarIndex].classList.add("benar");skor+=5;salah++;}
+    setTimeout(()=>{
+        i++;
+        if(i<kuis.length)tampilKuis();
+        else{
+            kuisDiv.classList.add("hidden");
+            hasilDiv.classList.remove("hidden");
+            hNamaEl.innerText=nama;
+            hSekolahEl.innerText=sekolah;
+            hSkorEl.innerText=skor;
+            hBenarEl.innerText=benar;
+            hSalahEl.innerText=salah;
+        }
+    },900);
+}
+
+window.reset=function(){location.reload();}
+};
+</script>
+</body>
+</html>
